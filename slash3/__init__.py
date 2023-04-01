@@ -1,26 +1,56 @@
 """
+[![codecov](https://codecov.io/gh/cariad/slash3/branch/main/graph/badge.svg?token=Vq0w74e8YY)](https://codecov.io/gh/cariad/slash3)
+
 ## Introduction
 
 **Slash3** is a Python package for building and navigating Amazon Web Services
 S3 URIs.
 
-For example:
+## Examples
+
+To construct an S3 URI from its component parts:
 
 ```python
 from slash3 import S3Uri
 
-zombies = S3Uri("s3://burgers/staff/zombies.jpg")
-print(zombies.bucket)  # "burgers"
-print(zombies.key.key)  # "staff/zombies.jpg"
+S3Uri.to_uri("circus", "images/clowns.jpg")  # s3://circus/images/clowns.jpg
+```
 
-clowns = S3Uri.to_uri("circus", "clowns.jpg")
-print(clowns.uri)  # "s3://circus/clowns.jpg"
+To join to a key:
 
-burger_prefix = S3Uri.to_uri("expo") / "photos" / "burger-"
-polenta = burger_prefix + "polenta.jpg"
+```python
+from slash3 import S3Uri
 
-print(polenta.uri)  # "s3://expo/photos/burger-polenta.jpg"
-print(polenta.parent)  # "s3://expo/photos/"
+images = S3Uri("s3://circus/") / "images"  # s3://circus/images
+clowns = images / "clowns.jpg"  # s3://circus/images/clowns.jpg
+```
+
+To append to a key:
+
+```python
+from slash3 import S3Uri
+
+staff = S3Uri("s3://circus/") / "staff-"  # s3://circus/staff-
+steve = staff + "steve.jpg"  # s3://circus/staff-steve.jpg
+penny = staff + "penny.jpg"  # s3://circus/staff-penny.jpg
+```
+
+To navigate to a parent path:
+
+```python
+from slash3 import S3Uri
+
+steve = S3Uri("s3://circus/images/steve.jpg")
+images = steve.parent  # s3://circus/images/
+```
+
+To discover a relative path:
+
+```python
+from slash3 import S3Uri
+
+steve = S3Uri("s3://circus/images/staff/steve.jpg")
+relative = steve.relative_to("s3://circus/images/")  # staff/steve.jpg
 ```
 
 ## Installation
