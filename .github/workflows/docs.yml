@@ -1,6 +1,6 @@
 name: website
 
-"on":
+on:  # yamllint disable-line rule:truthy
   push:
     tags:
       - "*"
@@ -14,8 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
       - run: pip install pipenv
       - run: pipenv install --dev
       - run: pipenv run pdoc slash3 --output-directory docs
