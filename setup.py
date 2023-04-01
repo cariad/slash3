@@ -33,7 +33,7 @@ setup(
     author="Cariad Eccleston",
     author_email="cariad@cariad.earth",
     classifiers=classifiers,
-    description="S3 URI builder",
+    description="Builds and navigates Amazon Web Services S3 URIs",
     include_package_data=True,
     license="MIT",
     long_description=long_description,
