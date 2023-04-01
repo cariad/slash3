@@ -1,6 +1,6 @@
 name: website
 
-on:
+"on":
   push:
     tags:
       - "*"
