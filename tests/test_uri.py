@@ -30,6 +30,7 @@ def test_append(base: str, suffix: str, expect: str) -> None:
     [
         ("s3://circus", "circus"),
         ("s3://circus/", "circus"),
+        ("S3://circus", "circus"),
         ("s3://circus/clowns.jpg", "circus"),
     ],
 )

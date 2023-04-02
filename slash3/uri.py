@@ -9,12 +9,12 @@ class S3Uri:
     """
     An Amazon Web Services S3 URI.
 
-    `uri` is an S3 URI string (e.g. "s3://circus/clowns.jpg"). To construct a
-    URI from its component parts, use the `to_uri()` class method instead.
+    To construct a URI from a bucket's name and optional key, use the
+    `to_uri()` class method instead.
     """
 
     def __init__(self, uri: str) -> None:
-        m = match(r"s3:\/\/([^/]*)(\/(.*))?", uri)
+        m = match(r"[sS]3:\/\/([^/]*)(\/(.*))?", uri)
 
         if not m:
             raise ValueError(f'"{uri}" is not an S3 URI')
@@ -41,10 +41,12 @@ class S3Uri:
         ```python
         images = S3Uri("s3://circus/staff-")
 
-        steve = images.append("steve.jpg")  # "s3://circus/staff-steve.jpg"
+        steve = images.append("steve.jpg")
+        # "s3://circus/staff-steve.jpg"
 
         # Or use "+":
-        penny = images + "penny.jpg"  # "s3://circus/staff-penny.jpg"
+        penny = images + "penny.jpg"
+        # "s3://circus/staff-penny.jpg"
         ```
 
         To add a suffix with a "/" delimiter, use `join()` instead.
@@ -67,10 +69,12 @@ class S3Uri:
         ```python
         images = S3Uri("s3://circus/staff")
 
-        steve = images.join("steve.jpg")  # "s3://circus/staff/steve.jpg"
+        steve = images.join("steve.jpg")
+        # "s3://circus/staff/steve.jpg"
 
         # Or use "/":
-        penny = images / "penny.jpg"  # "s3://circus/staff/penny.jpg"
+        penny = images / "penny.jpg"
+        # "s3://circus/staff/penny.jpg"
         ```
 
         To append a string without a "/" delimiter, use `append()` instead.
@@ -101,8 +105,8 @@ class S3Uri:
         """
         Gets the relative key path from this URI to a `parent` URI.
 
-        For example, the relative path to "s3://circus/private/clowns" from
-        "s3://circus/" is "private/clowns".
+        For example, the relative path to "s3://circus/private/clowns.jpg" from
+        "s3://circus/" is "private/clowns.jpg".
         """
 
         parent = S3Uri(parent) if isinstance(parent, str) else parent
@@ -129,9 +133,9 @@ class S3Uri:
     @staticmethod
     def to_string(bucket: str, key: Optional[Union[S3Key, str]]) -> str:
         """
-        Constructs a string S3 URI from its component parts.
+        Constructs a string S3 URI from a bucket and optional key.
 
-        To construct an `S3Uri` from component parts, use `to_uri()` instead.
+        To construct an `S3Uri` instance, use `to_uri()` instead.
         """
 
         return f"s3://{bucket}/{key or ''}"
@@ -143,7 +147,7 @@ class S3Uri:
         key: Optional[Union[S3Key, str]] = None,
     ) -> "S3Uri":
         """
-        Constructs an `S3Uri` from its component parts.
+        Constructs an `S3Uri` from a bucket and optional key.
         """
 
         return cls(cls.to_string(bucket, key=key))

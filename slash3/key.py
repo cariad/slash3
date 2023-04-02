@@ -7,10 +7,7 @@ MAX_LENGTH = 1024
 
 class S3Key:
     """
-    An Amazon Web Services S3 object key.
-
-    `key` is either an object key (e.g. "photos/clowns.jpg") or None to describe
-    the root of the bucket.
+    An Amazon Web Services S3 key.
     """
 
     def __init__(self, key: Optional[str] = None) -> None:
@@ -57,10 +54,12 @@ class S3Key:
         ```python
         images = S3Key("images/staff-")
 
-        steve = images.append("steve.jpg")  # "images/staff-steve.jpg"
+        steve = images.append("steve.jpg")
+        # "images/staff-steve.jpg"
 
         # Or use "+":
-        penny = images + "penny.jpg"  # "images/staff-penny.jpg"
+        penny = images + "penny.jpg"
+        # "images/staff-penny.jpg"
         ```
 
         To add a suffix with a "/" delimiter, use `join()` instead.
@@ -84,10 +83,12 @@ class S3Key:
         ```python
         images = S3Key("images/staff")
 
-        steve = images.join("steve.jpg")  # "images/staff/steve.jpg"
+        steve = images.join("steve.jpg")
+        # "images/staff/steve.jpg"
 
         # Or use "/":
-        penny = images / "penny.jpg"  # "images/staff/penny.jpg"
+        penny = images / "penny.jpg"
+        # "images/staff/penny.jpg"
         ```
 
         To append a string without a "/" delimiter, use `append()` instead.
@@ -106,7 +107,9 @@ class S3Key:
     @property
     def key(self) -> str:
         """
-        Key (e.g. "private/clowns.jpg").
+        Key.
+
+        For example, "private/clowns.jpg".
         """
 
         return self._key
@@ -116,8 +119,8 @@ class S3Key:
         """
         Normalises the left of the key.
 
-        If `slash` is true then key is returned with exactly one leading slash,
-        otherwise no leading slashes.
+        If `slash` is true then the key is returned with exactly one leading
+        slash, otherwise the key is returned with no leading slashes.
         """
 
         while key.startswith("/"):
@@ -130,8 +133,8 @@ class S3Key:
         """
         Normalises the right of the key.
 
-        If `slash` is true then key is returned with exactly one trailing slash,
-        otherwise no trailing slashes.
+        If `slash` is true then the key is returned with exactly one trailing
+        slash, otherwise the key is returned with no trailing slashes.
         """
 
         while key.endswith("/"):
