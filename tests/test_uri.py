@@ -83,6 +83,18 @@ def test_key(uri: str, expect: S3Key) -> None:
 @mark.parametrize(
     "uri, expect",
     [
+        ("s3://circus/", ""),
+        ("s3://circus/clowns.jpg", "clowns.jpg"),
+        ("s3://circus/private/clowns.jpg", "clowns.jpg"),
+        ("s3://circus/staff/photos/clowns.jpg", "clowns.jpg"),
+    ],
+)
+def test_leaf(uri: str, expect: str) -> None:
+    assert S3Uri(uri).leaf == expect
+
+@mark.parametrize(
+    "uri, expect",
+    [
         ("s3://circus/private/jugglers.jpg", "s3://circus/private/"),
         ("s3://circus/private/", "s3://circus/"),
         ("s3://circus/private", "s3://circus/"),

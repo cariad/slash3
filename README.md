@@ -105,6 +105,17 @@ steve.parent
 # s3://circus/images/
 ```
 
+## Get the key's leaf / file name
+
+```python
+from slash3 import S3Uri
+
+steve = S3Uri("s3://circus/images/steve.jpg")
+
+steve.leaf
+# steve.jpg
+```
+
 ### Get a relative key path
 
 To discover the relative path between a specific URI and a parent URI, call `S3Uri.relative_to`:

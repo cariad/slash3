@@ -69,6 +69,21 @@ def test_join(base: str, append: str, expect: str) -> None:
 
 
 @mark.parametrize(
+    "key, expect",
+    [
+        ("", ""),
+        ("/", ""),
+        ("clowns.jpg", "clowns.jpg"),
+        ("/clowns.jpg", "clowns.jpg"),
+        ("private/clowns.jpg", "clowns.jpg"),
+        ("staff/photos/clowns.jpg", "clowns.jpg"),
+    ],
+)
+def test_leaf(key: str, expect: str) -> None:
+    assert S3Key(key).leaf == expect
+
+
+@mark.parametrize(
     "base, append, expect",
     [
         ("private", "clowns.jpg", "private/clowns.jpg"),

@@ -91,6 +91,19 @@ class S3Uri:
         return self._key
 
     @property
+    def leaf(self) -> "S3Uri":
+        """
+        URI leaf.
+        
+        In a file system metaphor, the leaf would be the file's name.
+
+        For example, the leaf of "s3://circus/private/clowns.jpg" is
+        "clowns.jpg".
+        """
+
+        return S3Uri.to_uri(self._bucket, self.key.leaf)
+
+    @property
     def parent(self) -> "S3Uri":
         """
         Parent URI.

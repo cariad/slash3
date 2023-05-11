@@ -114,6 +114,18 @@ class S3Key:
 
         return self._key
 
+    @property
+    def leaf(self) -> str:
+        """
+        Key leaf.
+        
+        In a file system metaphor, the leaf would be the file's name.
+
+        For example, the leaf of "private/clowns.jpg" is "clowns.jpg".
+        """
+
+        return self.relative_to(self.parent)
+
     @staticmethod
     def normal_left(key: str, slash: bool = False) -> str:
         """
