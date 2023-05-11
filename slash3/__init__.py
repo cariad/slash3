@@ -114,6 +114,17 @@ steve.parent
 # s3://circus/images/
 ```
 
+## Get the key's leaf / file name
+
+```python
+from slash3 import S3Uri
+
+steve = S3Uri("s3://circus/images/steve.jpg")
+
+steve.leaf
+# steve.jpg
+```
+
 ## Get a relative key path
 
 To discover the relative path between a specific URI and a parent URI, call
@@ -147,7 +158,7 @@ developer with rent to pay -- I appreciate it!
 Hello! 👋 I'm **Cariad Eccleston**, and I'm a freelance Amazon Web Services
 architect, DevOps evangelist, CI/CD pipeline engineer and backend developer.
 
-You can find me at [cariad.earth](https://cariad.earth),
+You can find me at [cariad.earth](https://www.cariad.earth),
 [github/cariad](https://github.com/cariad),
 [linkedin/cariad](https://linkedin.com/in/cariad) and on Mastodon at
 [@cariad@tech.lgbt](https://tech.lgbt/@cariad).

@@ -83,6 +83,19 @@ def test_key(uri: str, expect: S3Key) -> None:
 @mark.parametrize(
     "uri, expect",
     [
+        ("s3://circus/", ""),
+        ("s3://circus/clowns.jpg", "clowns.jpg"),
+        ("s3://circus/private/clowns.jpg", "clowns.jpg"),
+        ("s3://circus/staff/photos/clowns.jpg", "clowns.jpg"),
+    ],
+)
+def test_leaf(uri: str, expect: str) -> None:
+    assert S3Uri(uri).leaf == expect
+
+
+@mark.parametrize(
+    "uri, expect",
+    [
         ("s3://circus/private/jugglers.jpg", "s3://circus/private/"),
         ("s3://circus/private/", "s3://circus/"),
         ("s3://circus/private", "s3://circus/"),
@@ -125,10 +138,11 @@ def test_relative_to__different_bucket() -> None:
 
 def test_relative_to__not_parent() -> None:
     with raises(ValueError) as ex:
-        S3Uri("s3://circus/clowns.jpg").relative_to("s3://circus/private/")
+        S3Uri("s3://circus/clowns.jpg").relative_to("s3://staff/")
 
     assert str(ex.value) == (
-        '"s3://circus/private/" is not a parent of "s3://circus/clowns.jpg"'
+        'There is no relative path from "s3://staff/" to '
+        '"s3://circus/clowns.jpg" because these URIs describe different buckets'
     )
 
 
