@@ -144,4 +144,4 @@ You don't have to give attribution in your project, but -- as a freelance develo
 
 Hello! 👋 I'm **Cariad Eccleston**, and I'm a freelance Amazon Web Services architect, DevOps evangelist, CI/CD pipeline engineer and backend developer.
 
-You can find me at [cariad.earth](https://cariad.earth), [github/cariad](https://github.com/cariad), [linkedin/cariad](https://linkedin.com/in/cariad) and on Mastodon at [@cariad@tech.lgbt](https://tech.lgbt/@cariad).
+You can find me at [cariad.earth](https://www.cariad.earth), [github/cariad](https://github.com/cariad), [linkedin/cariad](https://linkedin.com/in/cariad) and on Mastodon at [@cariad@tech.lgbt](https://tech.lgbt/@cariad).
