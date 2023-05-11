@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 from slash3.logging import logger
 
@@ -118,7 +118,7 @@ class S3Key:
     def leaf(self) -> str:
         """
         Key leaf.
-        
+
         In a file system metaphor, the leaf would be the file's name.
 
         For example, the leaf of "private/clowns.jpg" is "clowns.jpg".
@@ -186,3 +186,36 @@ class S3Key:
         logger.debug('Key "%s" parent is "%s"', self._key, parent_key)
 
         return S3Key(parent_key)
+
+    def relative_to(self, parent: Union["S3Key", str]) -> str:
+        """
+        Gets the relative key path from this key to a `parent` key.
+
+        For example, the relative path to "private/clowns.jpg" from parent
+        "private" is "clowns.jpg".
+        """
+
+        logger.debug(
+            'Calculating the relative key from "%s" to "%s"',
+            self,
+            parent,
+        )
+
+        parent = str(parent)
+        normal = self.normal_right(parent, slash=True) if parent else parent
+
+        logger.debug('Normalised the parent key to "%s"', normal)
+
+        if not self._key.startswith(normal):
+            raise ValueError(f'"{parent}" is not a parent of "{self}"')
+
+        relative_key = self._key[len(normal) :]  # noqa: E203
+
+        logger.debug(
+            'The relative path from "%s" to "%s" is "%s"',
+            parent,
+            self,
+            relative_key,
+        )
+
+        return relative_key

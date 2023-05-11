@@ -2,7 +2,6 @@ from re import match
 from typing import Any, Optional, Union
 
 from slash3.key import S3Key
-from slash3.logging import logger
 
 
 class S3Uri:
@@ -91,17 +90,17 @@ class S3Uri:
         return self._key
 
     @property
-    def leaf(self) -> "S3Uri":
+    def leaf(self) -> str:
         """
         URI leaf.
-        
+
         In a file system metaphor, the leaf would be the file's name.
 
         For example, the leaf of "s3://circus/private/clowns.jpg" is
         "clowns.jpg".
         """
 
-        return S3Uri.to_uri(self._bucket, self.key.leaf)
+        return self.key.leaf
 
     @property
     def parent(self) -> "S3Uri":
@@ -130,18 +129,7 @@ class S3Uri:
                 "because these URIs describe different buckets"
             )
 
-        if not self.key.key.startswith(parent.key.key):
-            raise ValueError(f'"{parent}" is not a parent of "{self}"')
-
-        relative_key = self.key.key[len(parent.key) :]  # noqa: E203
-        logger.debug(
-            'The relative path from "%s" to "%s" is "%s"',
-            parent,
-            self,
-            relative_key,
-        )
-
-        return relative_key
+        return self._key.relative_to(parent.key)
 
     @staticmethod
     def to_string(bucket: str, key: Optional[Union[S3Key, str]]) -> str:

@@ -48,7 +48,7 @@ setup(
     project_urls={
         "Documentation": "https://cariad.github.io/slash3/slash3.html",
         "Source": "https://github.com/cariad/slash3",
-    }, 
+    },
     python_requires=">=3.9",
     version=__version__,
 )
